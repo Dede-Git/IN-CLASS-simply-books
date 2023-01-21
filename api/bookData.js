@@ -43,10 +43,20 @@ const updateBook = (bookObj) => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
+const booksOnSale = (uid) => new Promise((resolve, reject) => {
+  axios.get(`${dbUrl}/books.json?orderBy="uid"&equalTo="${uid}"`)
+    .then((response) => {
+      const onSale = Object.values(response.data).filter((item) => item.sale);
+      resolve(onSale);
+    })
+    .catch(reject);
+});
+
 export {
   getBooks,
   createBook,
   deleteBook,
   getSingleBook,
   updateBook,
+  booksOnSale,
 };
